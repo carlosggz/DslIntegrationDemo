@@ -3,8 +3,8 @@ package com.example.demopop.config;
 import com.example.demopop.components.ChannelRoutingComponent;
 import com.example.demopop.components.DtoTransformerComponent;
 import com.example.demopop.components.MailTransformerComponent;
+import com.example.demopop.components.MailsProducer;
 import com.example.demopop.components.RemoveFileInterceptorComponent;
-import com.example.demopop.components.SendMailsComponent;
 import com.example.demopop.config.mail.MailSettings;
 import com.example.demopop.config.queue.QueueSettings;
 import com.example.demopop.models.MailInfoDto;
@@ -27,12 +27,10 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.file.remote.session.SessionFactory;
 import org.springframework.integration.ftp.outbound.FtpMessageHandler;
-import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.handler.MessageHandlerChain;
 import org.springframework.integration.http.outbound.HttpRequestExecutingMessageHandler;
 import org.springframework.integration.mail.MailReceiver;
 import org.springframework.integration.mail.MailReceivingMessageSource;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHandler;
 
 import java.io.File;
@@ -65,8 +63,8 @@ public class IntegrationConfig {
     }
 
     MessageSource<?> fakeMailer() {
-        SendMailsComponent sendMailsComponent = new SendMailsComponent(mailSettings);
-        return sendMailsComponent::getMail;
+        MailsProducer mailsProducer = new MailsProducer(mailSettings);
+        return mailsProducer::getMail;
     }
 
     @Bean(name = "outboundFtpHandler")

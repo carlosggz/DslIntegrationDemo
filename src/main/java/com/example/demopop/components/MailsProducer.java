@@ -13,12 +13,12 @@ import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 @Slf4j
-public class SendMailsComponent {
+public class MailsProducer {
     final static List<String> SUBJECTS = List.of("Info Required", "Confirmation", "Cancellation", "Other");
 
     private final MailSettings mailSettings;
 
-    public SendMailsComponent(MailSettings mailSettings) {
+    public MailsProducer(MailSettings mailSettings) {
         this.mailSettings = mailSettings;
         log.info("Fake mailer started!!!");
     }
